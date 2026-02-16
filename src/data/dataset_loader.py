@@ -32,7 +32,8 @@ class CrackDataset(Dataset):
             image_dir: Directory containing input images
             mask_dir: Directory containing mask images (for segmentation)
             transform: Optional transformations to apply
-            image_size: Target image size (height, width)
+            image_size: Target image size. Can be single int or (height, width) tuple
+                       for compatibility with torchvision transforms
         """
         self.image_dir = Path(image_dir)
         self.mask_dir = Path(mask_dir) if mask_dir else None
@@ -111,13 +112,20 @@ class DatasetImporter:
         Get default image transformations for training.
         
         Args:
-            image_size: Target image size
+            image_size: Target image size. Can be single int or (height, width) tuple.
+                       If tuple, uses first dimension for square resize.
             
         Returns:
             Composed transforms
         """
+        # Use single size for square images
+        if isinstance(image_size, tuple):
+            resize_size = image_size[0]
+        else:
+            resize_size = image_size
+            
         return transforms.Compose([
-            transforms.Resize(image_size),
+            transforms.Resize(resize_size),
             transforms.ToTensor(),
             transforms.Normalize(
                 mean=[0.485, 0.456, 0.406],

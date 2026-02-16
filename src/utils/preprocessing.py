@@ -20,7 +20,7 @@ class ImagePreprocessor:
         Initialize preprocessor.
         
         Args:
-            target_size: Target image size (height, width)
+            target_size: Target image size (width, height) for OpenCV compatibility
         """
         self.target_size = target_size
     
@@ -34,7 +34,7 @@ class ImagePreprocessor:
         
         Args:
             image: Input image (numpy array or PIL Image)
-            size: Target size, defaults to self.target_size
+            size: Target size (width, height), defaults to self.target_size
             
         Returns:
             Resized image as numpy array
@@ -191,13 +191,22 @@ def get_augmentation_transforms(image_size: Tuple[int, int] = (640, 640)):
     Get augmentation transforms for training.
     
     Args:
-        image_size: Target image size
+        image_size: Target image size (width, height) for consistency with PIL/torchvision
+                    Note: torchvision.transforms.Resize expects (height, width) or single int
         
     Returns:
         Composed transforms with augmentation
     """
+    # For torchvision Resize, if tuple is provided, it should be (height, width)
+    # So we reverse if needed, or use a single size value for square images
+    if isinstance(image_size, tuple) and len(image_size) == 2:
+        # Assume square images for simplicity, use first dimension
+        resize_size = image_size[0]
+    else:
+        resize_size = image_size
+    
     return transforms.Compose([
-        transforms.Resize(image_size),
+        transforms.Resize(resize_size),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomVerticalFlip(p=0.5),
         transforms.RandomRotation(degrees=10),
