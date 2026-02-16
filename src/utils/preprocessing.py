@@ -15,26 +15,28 @@ class ImagePreprocessor:
     Utility class for preprocessing concrete crack images.
     """
     
-    def __init__(self, target_size: Tuple[int, int] = (640, 640)):
+    def __init__(self, target_size: Union[int, Tuple[int, int]] = (640, 640)):
         """
         Initialize preprocessor.
         
         Args:
-            target_size: Target image size (width, height) for OpenCV compatibility
+            target_size: Target image size (width, height) for OpenCV compatibility.
+                        Can be single int for square images or (width, height) tuple.
         """
         self.target_size = target_size
     
     def resize_image(
         self,
         image: Union[np.ndarray, Image.Image],
-        size: Optional[Tuple[int, int]] = None
+        size: Optional[Union[int, Tuple[int, int]]] = None
     ) -> np.ndarray:
         """
         Resize image to target size.
         
         Args:
             image: Input image (numpy array or PIL Image)
-            size: Target size (width, height), defaults to self.target_size
+            size: Target size (width, height) or single int for square images.
+                 Defaults to self.target_size
             
         Returns:
             Resized image as numpy array
@@ -43,6 +45,10 @@ class ImagePreprocessor:
         
         if isinstance(image, Image.Image):
             image = np.array(image)
+        
+        # Ensure size is (width, height) for cv2.resize
+        if isinstance(size, int):
+            size = (size, size)
         
         return cv2.resize(image, size, interpolation=cv2.INTER_LINEAR)
     
@@ -186,21 +192,24 @@ class ImagePreprocessor:
             raise ValueError(f"Unknown edge detection method: {method}")
 
 
-def get_augmentation_transforms(image_size: Tuple[int, int] = (640, 640)):
+def get_augmentation_transforms(image_size: Union[int, Tuple[int, int]] = (640, 640)):
     """
     Get augmentation transforms for training.
     
     Args:
-        image_size: Target image size (width, height) for consistency with PIL/torchvision
-                    Note: torchvision.transforms.Resize expects (height, width) or single int
+        image_size: Target image size. Can be single int for square images or
+                   (height, width) tuple. Note: torchvision.transforms.Resize
+                   expects either a single int or (height, width) tuple. When a
+                   tuple is provided, this function creates square images using
+                   the first dimension (height) to ensure consistent aspect ratios.
         
     Returns:
         Composed transforms with augmentation
     """
-    # For torchvision Resize, if tuple is provided, it should be (height, width)
-    # So we reverse if needed, or use a single size value for square images
+    # torchvision.Resize expects single int or (height, width)
+    # For square images (recommended for most models), use single size
     if isinstance(image_size, tuple) and len(image_size) == 2:
-        # Assume square images for simplicity, use first dimension
+        # Use height dimension for square resize to maintain consistency
         resize_size = image_size[0]
     else:
         resize_size = image_size

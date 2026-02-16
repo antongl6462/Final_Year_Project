@@ -4,7 +4,7 @@ Dataset management module for loading and preprocessing concrete crack datasets.
 
 import os
 from pathlib import Path
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Union
 import torch
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
@@ -23,7 +23,7 @@ class CrackDataset(Dataset):
         image_dir: str,
         mask_dir: Optional[str] = None,
         transform: Optional[transforms.Compose] = None,
-        image_size: Tuple[int, int] = (640, 640)
+        image_size: Union[int, Tuple[int, int]] = (640, 640)
     ):
         """
         Initialize the crack dataset.
@@ -32,8 +32,8 @@ class CrackDataset(Dataset):
             image_dir: Directory containing input images
             mask_dir: Directory containing mask images (for segmentation)
             transform: Optional transformations to apply
-            image_size: Target image size. Can be single int or (height, width) tuple
-                       for compatibility with torchvision transforms
+            image_size: Target image size. Can be single int for square images or 
+                       (height, width) tuple for compatibility with torchvision transforms
         """
         self.image_dir = Path(image_dir)
         self.mask_dir = Path(mask_dir) if mask_dir else None
@@ -107,20 +107,22 @@ class DatasetImporter:
     """
     
     @staticmethod
-    def get_default_transforms(image_size: Tuple[int, int] = (640, 640)) -> transforms.Compose:
+    def get_default_transforms(image_size: Union[int, Tuple[int, int]] = (640, 640)) -> transforms.Compose:
         """
         Get default image transformations for training.
         
         Args:
-            image_size: Target image size. Can be single int or (height, width) tuple.
-                       If tuple, uses first dimension for square resize.
+            image_size: Target image size. Can be single int for square images or 
+                       (height, width) tuple. For tuples, creates square images using
+                       the first dimension (height).
             
         Returns:
             Composed transforms
         """
-        # Use single size for square images
+        # torchvision.Resize expects single int or (height, width)
+        # For consistency, we use single size for square images
         if isinstance(image_size, tuple):
-            resize_size = image_size[0]
+            resize_size = image_size[0]  # Use height for square resize
         else:
             resize_size = image_size
             
