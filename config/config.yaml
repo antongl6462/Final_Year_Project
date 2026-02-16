@@ -1,0 +1,93 @@
+# Concrete Crack Detection Configuration
+
+# Paths
+paths:
+  datasets:
+    root: "datasets/"
+    train: "datasets/train"
+    val: "datasets/val"
+    test: "datasets/test"
+  
+  models:
+    pretrained: "models/downloaded"
+    checkpoints: "models/checkpoints"
+    yolo: "models/yolo"
+  
+  outputs:
+    results: "outputs/results"
+    masks: "outputs/masks"
+    visualizations: "outputs/visualizations"
+
+# Model configurations
+models:
+  # Classification model
+  classifier:
+    architecture: "resnet50"
+    num_classes: 2
+    pretrained: true
+    input_size: [224, 224]
+  
+  # Segmentation model
+  segmentation:
+    architecture: "unet"
+    in_channels: 3
+    out_channels: 1
+    input_size: [640, 640]
+  
+  # YOLO detector
+  yolo:
+    model_type: "yolov8n.pt"  # Options: yolov8n, yolov8s, yolov8m, yolov8l, yolov8x
+    conf_threshold: 0.25
+    iou_threshold: 0.45
+    input_size: 640
+
+# Training parameters
+training:
+  batch_size: 16
+  epochs: 100
+  learning_rate: 0.001
+  optimizer: "adam"
+  weight_decay: 0.0001
+  
+  # Data augmentation
+  augmentation:
+    horizontal_flip: true
+    vertical_flip: true
+    rotation: 10
+    color_jitter: true
+  
+  # Scheduler
+  scheduler:
+    type: "step"
+    step_size: 30
+    gamma: 0.1
+
+# Inference parameters
+inference:
+  device: "cuda"  # Options: cuda, cpu
+  batch_size: 8
+  
+  # Mask generation
+  mask_generation:
+    method: "hybrid"  # Options: threshold, edges, model, hybrid
+    threshold: 0.5
+    post_process: true
+
+# Data preprocessing
+preprocessing:
+  target_size: [640, 640]
+  normalize: true
+  denoise: true
+  enhance_contrast: true
+  
+# Digital Twin Integration (Future)
+digital_twin:
+  enabled: false
+  api_endpoint: "http://localhost:8000"
+  visualization_format: "3d"
+
+# Logging
+logging:
+  tensorboard: true
+  save_frequency: 10
+  log_dir: "logs/"
