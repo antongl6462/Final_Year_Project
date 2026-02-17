@@ -31,9 +31,9 @@ class ClassificationModel(nn.Module):
         else:
             raise ValueError(f'Unknown backbone: {backbone}')
         self.backbone = net
+        # ResNet with fc=Identity() returns 2D tensor (batch, in_features)
+        # So we only need a classification head without pooling/flattening
         self.head = nn.Sequential(
-            nn.AdaptiveAvgPool2d(1),
-            nn.Flatten(),
             nn.Dropout(dropout),
             nn.Linear(in_features, 1)
         )
@@ -41,7 +41,8 @@ class ClassificationModel(nn.Module):
     def forward(self, x):
         x = self.backbone(x)
         x = self.head(x)
-        return x.squeeze(-1)
+        # x is shape (batch, 1), keep it as is for BCEWithLogitsLoss
+        return x
 
 # U-Net for segmentation
 class UNet(nn.Module):
