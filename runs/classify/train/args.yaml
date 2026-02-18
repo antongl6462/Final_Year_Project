@@ -2,7 +2,7 @@ task: classify
 mode: train
 model: yolov8n-cls.pt
 data: /Users/anton/Documents/GitHub/Final_Year_Project/classify_yolo
-epochs: 100
+epochs: 10
 time: null
 patience: 20
 batch: 32
