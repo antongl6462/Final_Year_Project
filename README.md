@@ -24,7 +24,10 @@ Final_Year_Project/
 │   ├── prepare_segment_data.py     # Build YOLO segmentation dataset
 │   ├── train_yolo_segment.py       # Train segmentation model
 │   └── eval_segment.py             # Evaluate segmentation model
+├── setup_data.py                    # Automated dataset download/setup
 ├── requirements.txt                 # Python dependencies
+├── DATA_SETUP_GUIDE.md             # Detailed data setup instructions
+├── YOLO_Concrete_Crack_Detection.ipynb  # Interactive notebook
 ├── README.md                        # This file
 └── runs/                           # Training outputs (auto-created)
 ```
@@ -60,31 +63,56 @@ pip install -r requirements.txt
 
 ## 🗂️ Data Setup
 
-### Data lives in a separate git branch
+### Quick Start - Download Dataset
 
-This project supports accessing data from a **different git branch** to keep code and large datasets separate.
-
-#### Option 1: Git Worktree (Recommended)
-
-Use `git worktree` to check out the data branch into a separate directory:
+**Method 1: Automated Setup (Kaggle)**
 
 ```bash
-# Check out data branch to ../project-data
-git worktree add ../project-data copilot/import-datasets-and-models
+# Install kaggle API
+pip install kaggle
 
-# Verify data structure
-ls ../project-data/
+# Setup Kaggle credentials (one-time)
+# 1. Go to https://www.kaggle.com/account
+# 2. Create API token (downloads kaggle.json)
+# 3. Place at ~/.kaggle/kaggle.json
+# 4. Run: chmod 600 ~/.kaggle/kaggle.json
+
+# Download and setup dataset
+python setup_data.py --method kaggle --output_dir ../project-data
 ```
 
-Then use `--data_root ../project-data` when running scripts.
-
-#### Option 2: Manual Checkout
-
-Alternatively, manually check out the data branch:
+**Method 2: Manual Download**
 
 ```bash
-# Clone data branch separately
-git clone -b copilot/import-datasets-and-models https://github.com/antongl6462/Final_Year_Project.git project-data
+# 1. Download dataset from Kaggle:
+#    https://www.kaggle.com/datasets/arunrk7/surface-crack-detection
+# 2. Extract the zip file
+# 3. Run setup script:
+python setup_data.py --method manual --data_path /path/to/extracted/data --output_dir ../project-data
+
+# Or if you have the zip file:
+python setup_data.py --method zip --zip_path /path/to/dataset.zip --output_dir ../project-data
+```
+
+**Method 3: Use Existing Data**
+
+If you already have a concrete crack dataset:
+
+```bash
+# Dataset should have structure:
+#   Positive/ or cracked/   (cracked images)
+#   Negative/ or not_cracked/ (non-cracked images)
+
+python setup_data.py --method manual --data_path /your/dataset/path --output_dir ../project-data
+```
+
+### Git Worktree (Optional)
+
+The data branch (`copilot/import-datasets-and-models`) contains code utilities but not the dataset itself. If you want to access that branch:
+
+```bash
+# Check out data branch utilities
+git worktree add ../project-data copilot/import-datasets-and-models
 ```
 
 ### Expected Data Structure
