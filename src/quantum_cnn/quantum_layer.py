@@ -91,6 +91,6 @@ class QuantumCircuitLayer(nn.Module):
             raise ValueError(
                 f"Input feature dim must equal n_qubits={self.n_qubits}, got {x.shape[1]}"
             )
-        # Process samples individually (PennyLane TorchLayer expects 1-D input).
-        outputs = [self.quantum_layer(sample.unsqueeze(0)) for sample in x]
-        return torch.cat(outputs, dim=0)
+        # PennyLane TorchLayer expects a 1-D input tensor per sample.
+        outputs = [self.quantum_layer(sample) for sample in x]
+        return torch.stack(outputs, dim=0)
