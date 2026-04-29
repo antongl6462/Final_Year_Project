@@ -2,6 +2,8 @@
 
 A complete, production-ready codebase for concrete crack detection using **Ultralytics YOLO**. Supports both **classification** (cracked vs not_cracked) and **segmentation** (crack masks) tasks.
 
+> Important: segmentation is trained only on a **separate labeled segmentation dataset** (with true masks), not on the 40,000-image classification dataset.
+
 ## 🚀 Features
 
 - **YOLO Classification**: Binary classification with F1/precision/recall/ROC-AUC evaluation
@@ -139,7 +141,7 @@ concrete-crack-images-for-classification/
   Negative/   # Will be treated as 'not_cracked'
 ```
 
-#### Segmentation Data (Optional)
+#### Segmentation Data (Optional, separate dataset)
 
 ```
 DATA_ROOT/raw_segmentation/
@@ -236,6 +238,8 @@ python src/eval_classify.py \
 ---
 
 ## 🎨 Task B: Segmentation
+
+This task uses a separate segmentation dataset with ground-truth masks. It is not run on the 40,000-image classification dataset.
 
 ### Step 1: Prepare Data
 
