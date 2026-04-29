@@ -1,4 +1,4 @@
-mean_iou=0.000000
+mean_iou=0.475175
 num_samples=6
 /Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_trial/figures/seg_training_curves.png
 /Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_trial/figures/seg_val_batch0_labels.jpg
