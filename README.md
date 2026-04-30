@@ -326,6 +326,73 @@ python src/eval_segment.py \
 - 🔴 Red: Prediction only (false positive)
 - 🟡 Yellow: Overlap (true positive)
 
+### Step 4: Preferred Raster Semantic Segmentation Pipeline
+
+For thin concrete cracks, the recommended workflow is now the raster-mask semantic pipeline rather than YOLO polygon supervision. It trains directly on binary masks, adds background-only negatives from the classification dataset, uses patch sampling for crack-heavy crops, and performs deterministic sliding-window inference on full-resolution images.
+
+**New scripts:**
+- `segmentation_dataset.py`: dataset discovery, quality checks, splits, patch extraction, sliding-window helpers
+- `train_segmentation.py`: semantic training loop, checkpointing, validation threshold search, optional post-training evaluation
+- `evaluate_segmentation.py`: threshold calibration, held-out test metrics, qualitative plots, worst-case analysis
+- `predict_segmentation.py`: checkpoint inference on single images or folders
+- `utils_metrics.py` / `utils_visualisation.py`: shared losses, metrics, post-processing, and report figures
+
+#### Train the semantic model
+
+```bash
+python train_segmentation.py \
+  --project_root . \
+  --dataset_root raw_segmentation \
+  --negative_dir concrete-crack-images-for-classification/Negative \
+  --architecture unetplusplus \
+  --encoder_name resnet34 \
+  --patch_size 512 \
+  --inference_overlap 0.5 \
+  --epochs 40 \
+  --batch_size 4 \
+  --learning_rate 3e-4 \
+  --positive_patch_prob 0.7 \
+  --mixed_precision
+```
+
+**Training behaviour:**
+- trains on raster masks directly instead of polygon labels
+- prefers positive crack patches while still mixing in background-only crops
+- uses `AdamW`, cosine scheduling, mixed precision on CUDA, and reproducible seeds
+- saves checkpoints to `models/` and figures/tables to `outputs/`
+
+#### Evaluate once on the held-out test split
+
+```bash
+python evaluate_segmentation.py \
+  --checkpoint models/best_semantic_segmentation.pth \
+  --dataset_root raw_segmentation \
+  --negative_dir concrete-crack-images-for-classification/Negative
+```
+
+**Evaluation outputs:**
+- `outputs/threshold_sweep.csv`: threshold search on validation predictions
+- `outputs/segmentation_metrics_test.csv`: test-set metrics at the selected operating point
+- `outputs/confusion_matrix.png`: pixel-level confusion matrix
+- `outputs/qualitative_predictions.png`: representative overlays
+- `outputs/worst_predictions.png`: failure-case panel for analysis
+
+#### Run inference on new images
+
+```bash
+python predict_segmentation.py \
+  --checkpoint models/best_semantic_segmentation.pth \
+  --input raw_segmentation/concreteCrackSegmentationDataset/rgb \
+  --output_dir outputs/predictions
+```
+
+#### Why this pipeline is preferred
+
+- crack masks remain in their original raster form, avoiding contour simplification loss
+- threshold calibration is explicit, so recall-prioritised operating points can be reported honestly
+- sliding-window inference preserves more native detail than aggressively shrinking full images
+- post-processing is configurable and evaluated rather than assumed
+
 ---
 
 ## 🔧 Advanced Configuration
