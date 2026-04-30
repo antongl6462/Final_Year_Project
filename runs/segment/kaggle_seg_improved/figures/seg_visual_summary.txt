@@ -1,0 +1,8 @@
+mean_iou=0.119283
+num_samples=6
+/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_improved/figures/seg_training_curves.png
+/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_improved/figures/seg_val_batch0_labels.jpg
+/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_improved/figures/seg_val_batch0_pred.jpg
+/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_improved/figures/seg_dataset_labels_overview.jpg
+/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_improved/figures/seg_qualitative_grid.png
+/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/kaggle_seg_improved/figures/seg_iou_bar_chart.png
