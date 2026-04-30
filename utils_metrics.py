@@ -71,13 +71,17 @@ class CombinedSegmentationLoss(nn.Module):
         self.dice_weight = dice_weight
         self.focal_weight = focal_weight
         self.register_buffer("pos_weight_tensor", torch.tensor([pos_weight], dtype=torch.float32))
-        self.bce = nn.BCEWithLogitsLoss(pos_weight=self.pos_weight_tensor)
         self.dice = DiceLoss()
         self.focal = BinaryFocalLoss(alpha=focal_alpha, gamma=focal_gamma)
 
     def forward(self, logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
+        bce = F.binary_cross_entropy_with_logits(
+            logits,
+            targets,
+            pos_weight=self.pos_weight_tensor.to(device=logits.device, dtype=logits.dtype),
+        )
         return (
-            self.bce_weight * self.bce(logits, targets)
+            self.bce_weight * bce
             + self.dice_weight * self.dice(logits, targets)
             + self.focal_weight * self.focal(logits, targets)
         )

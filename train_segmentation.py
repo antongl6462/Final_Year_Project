@@ -143,21 +143,27 @@ def evaluate_validation_epoch(
 ) -> Dict[str, float]:
     probability_metrics: List[Dict[str, float]] = []
     max_images = config.max_val_images if config.max_val_images is not None else len(samples)
-    for sample in list(samples)[:max_images]:
-        image = read_rgb_image(sample.image())
-        gt_mask = read_binary_mask(sample.mask(), image.shape[:2])
-        probability_map = sliding_window_inference(
-            model=model,
-            image_rgb=image,
-            device=device,
-            patch_size=config.patch_size,
-            overlap=config.inference_overlap,
-            amp_enabled=bool(config.mixed_precision and device.type == "cuda"),
-        )
-        pred_mask = (probability_map >= 0.5).astype("uint8")
-        probability_metrics.append(compute_binary_metrics(pred_mask, gt_mask))
+    was_training = model.training
+    model.eval()
+    try:
+        for sample in list(samples)[:max_images]:
+            image = read_rgb_image(sample.image())
+            gt_mask = read_binary_mask(sample.mask(), image.shape[:2])
+            probability_map = sliding_window_inference(
+                model=model,
+                image_rgb=image,
+                device=device,
+                patch_size=config.patch_size,
+                overlap=config.inference_overlap,
+                amp_enabled=bool(config.mixed_precision and device.type == "cuda"),
+            )
+            pred_mask = (probability_map >= 0.5).astype("uint8")
+            probability_metrics.append(compute_binary_metrics(pred_mask, gt_mask))
+    finally:
+        if was_training:
+            model.train()
     if not probability_metrics:
-        return {key: 0.0 for key in ["dice", "iou", "precision", "recall", "f1"]}
+        return {key: 0.0 for key in ["val_dice", "val_iou", "val_precision", "val_recall", "val_f1"]}
     return {
         "val_dice": float(sum(row["dice"] for row in probability_metrics) / len(probability_metrics)),
         "val_iou": float(sum(row["iou"] for row in probability_metrics) / len(probability_metrics)),
@@ -259,7 +265,7 @@ def run_training_pipeline(config: SegmentationConfig) -> Dict[str, Any]:
     model.to(device)
     optimizer = AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
     scheduler = CosineAnnealingLR(optimizer, T_max=max(config.epochs, 1))
-    loss_fn = CombinedSegmentationLoss(pos_weight=pos_weight)
+    loss_fn = CombinedSegmentationLoss(pos_weight=pos_weight).to(device)
     scaler = torch.cuda.amp.GradScaler() if device.type == "cuda" and config.mixed_precision else None
     stopper = EarlyStopping(config.early_stopping_patience)
 

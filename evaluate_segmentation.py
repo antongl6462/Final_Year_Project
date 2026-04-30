@@ -46,11 +46,13 @@ except Exception:
 class TorchvisionDeepLabBinary(nn.Module):
     def __init__(self, pretrained: bool = True) -> None:
         super().__init__()
-        weights = DeepLabV3_ResNet50_Weights.DEFAULT if pretrained else None
-        try:
-            model = deeplabv3_resnet50(weights=weights)
-        except Exception:
-            model = deeplabv3_resnet50(weights=None)
+        if pretrained:
+            try:
+                model = deeplabv3_resnet50(weights=DeepLabV3_ResNet50_Weights.DEFAULT)
+            except Exception:
+                model = deeplabv3_resnet50(weights=None, weights_backbone=None)
+        else:
+            model = deeplabv3_resnet50(weights=None, weights_backbone=None)
         model.classifier[4] = nn.Conv2d(256, 1, kernel_size=1)
         if getattr(model, "aux_classifier", None) is not None:
             model.aux_classifier[4] = nn.Conv2d(256, 1, kernel_size=1)
