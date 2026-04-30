@@ -114,17 +114,19 @@ def read_binary_mask(mask_path: Optional[Path], image_shape: Optional[Tuple[int,
 def resolve_kaggle_segmentation_root(dataset_root: Path) -> Tuple[Path, Path]:
 	dataset_root = dataset_root.resolve()
 	candidates = [
-		dataset_root,
-		dataset_root / "concreteCrackSegmentationDataset",
+		(dataset_root, "rgb", "BW"),
+		(dataset_root, "images", "masks"),
+		(dataset_root / "concreteCrackSegmentationDataset", "rgb", "BW"),
+		(dataset_root / "concreteCrackSegmentationDataset", "images", "masks"),
 	]
-	for candidate in candidates:
-		rgb_dir = candidate / "rgb"
-		bw_dir = candidate / "BW"
+	for candidate, image_folder, mask_folder in candidates:
+		rgb_dir = candidate / image_folder
+		bw_dir = candidate / mask_folder
 		if rgb_dir.exists() and bw_dir.exists():
 			return rgb_dir, bw_dir
 	raise FileNotFoundError(
 		f"Could not find Kaggle segmentation folders under {dataset_root}. "
-		"Expected `rgb/` and `BW/` folders."
+		"Expected either `rgb/` + `BW/` or `images/` + `masks/` folders."
 	)
 
 

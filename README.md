@@ -26,6 +26,12 @@ Final_Year_Project/
 │   ├── prepare_segment_data.py     # Build YOLO segmentation dataset
 │   ├── train_yolo_segment.py       # Train segmentation model
 │   └── eval_segment.py             # Evaluate segmentation model
+├── segmentation_dataset.py         # Shared raster semantic dataset utilities
+├── train_segmentation.py           # Train raster semantic segmentation model
+├── evaluate_segmentation.py        # Evaluate semantic segmentation checkpoint
+├── predict_segmentation.py         # Run semantic segmentation inference
+├── utils_metrics.py                # Shared losses, metrics, threshold sweep
+├── utils_visualisation.py          # Shared report figures and qualitative grids
 ├── setup_data.py                    # Automated dataset download/setup
 ├── requirements.txt                 # Python dependencies
 ├── DATA_SETUP_GUIDE.md             # Detailed data setup instructions
@@ -382,7 +388,7 @@ python evaluate_segmentation.py \
 ```bash
 python predict_segmentation.py \
   --checkpoint models/best_semantic_segmentation.pth \
-  --input raw_segmentation/concreteCrackSegmentationDataset/rgb \
+  --input raw_segmentation/images \
   --output_dir outputs/predictions
 ```
 
@@ -536,7 +542,8 @@ pip install -r requirements.txt
 ### Segmentation Dataset (if available)
 - **Images**: RGB images
 - **Masks**: Binary (0=background, 255=crack)
-- **Format**: Converted to YOLO polygon annotations
+- **Preferred Format**: Raster masks for semantic segmentation
+- **Optional Baseline Format**: Converted YOLO polygon annotations
 
 ---
 
