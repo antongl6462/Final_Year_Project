@@ -62,7 +62,7 @@ class TorchvisionDeepLabBinary(nn.Module):
         return self.model(x)["out"]
 
 
-def build_semantic_model(
+def build_segmentation_model(
     architecture: str = "unet",
     encoder_name: str = "resnet34",
     pretrained: bool = True,
@@ -111,7 +111,7 @@ def build_semantic_model(
 def load_checkpoint(checkpoint_path: Path, device: torch.device) -> Tuple[nn.Module, Dict[str, Any]]:
     checkpoint = torch.load(checkpoint_path, map_location=device)
     model_meta = checkpoint.get("model_meta", {})
-    model, created_meta = build_semantic_model(
+    model, created_meta = build_segmentation_model(
         architecture=model_meta.get("architecture", "unet"),
         encoder_name=model_meta.get("encoder_name", "resnet34"),
         pretrained=False,
@@ -225,7 +225,7 @@ def dissertation_summary_text(summary: Dict[str, float], threshold: float, recal
     operating_mode = "recall-prioritised" if recall_priority else "F1-optimal"
     return (
         "Original YOLO segmentation failed mainly because polygon conversion removed thin-crack geometry before training, "
-        "so the supervision itself was degraded. The revised pipeline uses raster-mask semantic segmentation throughout, "
+        "so the supervision itself was degraded. The revised pipeline uses raster-mask segmentation throughout, "
         "which preserves thin crack structure at pixel level. "
         f"Final test Dice={summary['dice']:.4f}, IoU={summary['iou']:.4f}, precision={summary['precision']:.4f}, "
         f"recall={summary['recall']:.4f}. "
@@ -307,7 +307,7 @@ def run_full_evaluation(
     save_qualitative_predictions(
         qualitative_items,
         output_dir / "qualitative_predictions.png",
-        "Semantic Segmentation Predictions",
+        "Mask-Based Segmentation Predictions",
     )
     save_worst_predictions(qualitative_items, output_dir / "worst_predictions.png")
 
@@ -326,7 +326,7 @@ def run_full_evaluation(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate the raster semantic segmentation baseline")
+    parser = argparse.ArgumentParser(description="Evaluate the raster-mask segmentation baseline")
     parser.add_argument("--checkpoint", type=str, required=True)
     parser.add_argument("--dataset_root", type=str, required=True)
     parser.add_argument("--negative_dir", type=str, default="")

@@ -26,10 +26,10 @@ Final_Year_Project/
 │   ├── prepare_segment_data.py     # Build YOLO segmentation dataset
 │   ├── train_yolo_segment.py       # Train segmentation model
 │   └── eval_segment.py             # Evaluate segmentation model
-├── segmentation_dataset.py         # Shared raster semantic dataset utilities
-├── train_segmentation.py           # Train raster semantic segmentation model
-├── evaluate_segmentation.py        # Evaluate semantic segmentation checkpoint
-├── predict_segmentation.py         # Run semantic segmentation inference
+├── segmentation_dataset.py         # Shared raster-mask dataset utilities
+├── train_segmentation.py           # Train raster-mask segmentation model
+├── evaluate_segmentation.py        # Evaluate raster-mask segmentation checkpoint
+├── predict_segmentation.py         # Run raster-mask segmentation inference
 ├── utils_metrics.py                # Shared losses, metrics, threshold sweep
 ├── utils_visualisation.py          # Shared report figures and qualitative grids
 ├── setup_data.py                    # Automated dataset download/setup
@@ -332,18 +332,18 @@ python src/eval_segment.py \
 - 🔴 Red: Prediction only (false positive)
 - 🟡 Yellow: Overlap (true positive)
 
-### Step 4: Preferred Raster Semantic Segmentation Pipeline
+### Step 4: Preferred Raster-Mask Segmentation Pipeline
 
-For thin concrete cracks, the recommended workflow is now the raster-mask semantic pipeline rather than YOLO polygon supervision. It trains directly on binary masks, adds background-only negatives from the classification dataset, uses patch sampling for crack-heavy crops, and performs deterministic sliding-window inference on full-resolution images.
+For thin concrete cracks, the recommended workflow is now the raster-mask pipeline rather than YOLO polygon supervision. It trains directly on binary masks, adds background-only negatives from the classification dataset, uses patch sampling for crack-heavy crops, and performs deterministic sliding-window inference on full-resolution images.
 
 **New scripts:**
 - `segmentation_dataset.py`: dataset discovery, quality checks, splits, patch extraction, sliding-window helpers
-- `train_segmentation.py`: semantic training loop, checkpointing, validation threshold search, optional post-training evaluation
+- `train_segmentation.py`: mask-based training loop, checkpointing, validation threshold search, optional post-training evaluation
 - `evaluate_segmentation.py`: threshold calibration, held-out test metrics, qualitative plots, worst-case analysis
 - `predict_segmentation.py`: checkpoint inference on single images or folders
 - `utils_metrics.py` / `utils_visualisation.py`: shared losses, metrics, post-processing, and report figures
 
-#### Train the semantic model
+#### Train the mask-based model
 
 ```bash
 python train_segmentation.py \
@@ -371,7 +371,7 @@ python train_segmentation.py \
 
 ```bash
 python evaluate_segmentation.py \
-  --checkpoint models/best_semantic_segmentation.pth \
+  --checkpoint models/best_mask_segmentation.pth \
   --dataset_root raw_segmentation \
   --negative_dir concrete-crack-images-for-classification/Negative
 ```
@@ -387,7 +387,7 @@ python evaluate_segmentation.py \
 
 ```bash
 python predict_segmentation.py \
-  --checkpoint models/best_semantic_segmentation.pth \
+  --checkpoint models/best_mask_segmentation.pth \
   --input raw_segmentation/images \
   --output_dir outputs/predictions
 ```

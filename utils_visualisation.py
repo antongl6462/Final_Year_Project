@@ -136,4 +136,4 @@ def save_qualitative_predictions(items: Sequence[Dict], output_path: Path, title
 
 def save_worst_predictions(items: Sequence[Dict], output_path: Path, max_items: int = 6) -> None:
     ranked = sorted(items, key=lambda item: item.get("dice", 0.0))
-    save_qualitative_predictions(ranked[:max_items], output_path, "Worst Semantic Segmentation Predictions", max_items=max_items)
+    save_qualitative_predictions(ranked[:max_items], output_path, "Worst Mask Segmentation Predictions", max_items=max_items)

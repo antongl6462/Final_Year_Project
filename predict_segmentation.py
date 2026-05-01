@@ -13,7 +13,7 @@ from utils_metrics import PostProcessingConfig, apply_post_processing
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Predict crack masks with the semantic segmentation checkpoint")
+    parser = argparse.ArgumentParser(description="Predict crack masks with the mask-segmentation checkpoint")
     parser.add_argument("--checkpoint", type=str, required=True)
     parser.add_argument("--input", type=str, required=True, help="Image file or folder")
     parser.add_argument("--output_dir", type=str, default="outputs/predictions")

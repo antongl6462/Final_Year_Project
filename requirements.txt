@@ -22,7 +22,7 @@ pyyaml>=6.0
 torch>=2.0.0
 torchvision>=0.15.0
 
-# Semantic segmentation pipeline
+# Raster-mask segmentation pipeline
 albumentations>=1.4.0
 
 # Optional semantic backbones / analysis helpers

@@ -15,7 +15,7 @@ from torch.optim import AdamW
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.data import DataLoader
 
-from evaluate_segmentation import build_semantic_model, run_full_evaluation, sliding_window_inference
+from evaluate_segmentation import build_segmentation_model, run_full_evaluation, sliding_window_inference
 from segmentation_dataset import (
     PatchSegmentationDataset,
     SegmentationSample,
@@ -257,7 +257,7 @@ def run_training_pipeline(config: SegmentationConfig) -> Dict[str, Any]:
     )
 
     pos_weight = compute_positive_class_weight(inventory["train"])
-    model, model_meta = build_semantic_model(
+    model, model_meta = build_segmentation_model(
         architecture=config.architecture,
         encoder_name=config.encoder_name,
         pretrained=config.pretrained_encoder,
@@ -271,11 +271,11 @@ def run_training_pipeline(config: SegmentationConfig) -> Dict[str, Any]:
 
     history: List[Dict[str, Any]] = []
     best_dice = float("-inf")
-    best_path = output_dirs["models"] / "best_semantic_segmentation.pth"
-    last_path = output_dirs["models"] / "last_semantic_segmentation.pth"
+    best_path = output_dirs["models"] / "best_mask_segmentation.pth"
+    last_path = output_dirs["models"] / "last_mask_segmentation.pth"
 
     start_time = time.time()
-    print("Semantic segmentation environment")
+    print("Mask-based segmentation environment")
     print(json.dumps({"device": device_name, "amp_enabled": bool(amp_supported and config.mixed_precision), "versions": package_versions()}, indent=2))
     print("Data quality report")
     print(format_data_quality_report(report))
@@ -337,7 +337,7 @@ def run_training_pipeline(config: SegmentationConfig) -> Dict[str, Any]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train raster semantic segmentation for concrete cracks")
+    parser = argparse.ArgumentParser(description="Train raster-mask crack segmentation for concrete cracks")
     parser.add_argument("--dataset_root", type=str, required=True)
     parser.add_argument("--negative_dir", type=str, default="")
     parser.add_argument("--project_root", type=str, default=".")
