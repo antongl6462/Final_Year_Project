@@ -21,10 +21,3 @@ pyyaml>=6.0
 # PyTorch (if not already installed)
 torch>=2.0.0
 torchvision>=0.15.0
-
-# Raster-mask segmentation pipeline
-albumentations>=1.4.0
-
-# Optional semantic backbones / analysis helpers
-segmentation-models-pytorch>=0.3.3
-scikit-image>=0.22.0
