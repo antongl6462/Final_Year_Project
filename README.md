@@ -146,7 +146,7 @@ concrete-crack-images-for-classification/
   Negative/   # Will be treated as 'not_cracked'
 ```
 
-#### Segmentation Data (Optional)
+#### Segmentation Data 
 
 ```
 DATA_ROOT/raw_segmentation/
