@@ -1,0 +1,14 @@
+{
+  "project_root": "/Users/anton/Documents/GitHub/Final_Year_Project",
+  "dataset_local_dir": "/Users/anton/Documents/GitHub/Final_Year_Project/kaggle_sources/concrete-crack-images",
+  "kernel_dir": "/Users/anton/Documents/GitHub/Final_Year_Project/kaggle_sources/cracktrack",
+  "kernel_output_dir": "/Users/anton/Documents/GitHub/Final_Year_Project/kaggle_sources/cracktrack_output",
+  "segment_data_yaml": "/Users/anton/Documents/GitHub/Final_Year_Project/local_repro/segment_yolo/crack-seg.yaml",
+  "best_model": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/cracktrack_repro_8s_50/weights/best.pt",
+  "eval_metrics": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/cracktrack_repro_8s_50/eval/metrics_test.json",
+  "summary": {
+    "num_images": 80,
+    "dice_mean": 0.7773763707312001,
+    "iou_mean": 0.6778516042278285
+  }
+}
