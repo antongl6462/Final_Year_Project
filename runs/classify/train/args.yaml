@@ -10,7 +10,7 @@ imgsz: 224
 save: true
 save_period: -1
 cache: false
-device: cpu
+device: mps
 workers: 8
 project: /Users/anton/Documents/GitHub/Final_Year_Project/runs/classify
 name: train
