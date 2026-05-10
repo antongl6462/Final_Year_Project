@@ -35,3 +35,12 @@ python src/eval_classify.py --model runs/classify/train/weights/best.pt --data_r
 
 - Use this branch for classification-only work.
 - Continue other experiment tracks in a separate branch.
+
+## Leakage audit
+
+The notebook `YOLO_Concrete_Crack_Detection.ipynb` now includes two safeguards against overly optimistic evaluation metrics:
+
+- Exact duplicate images are hashed and removed before the train/val/test split.
+- The final `train`, `val`, and `test` folders are hashed again after dataset creation, and the notebook raises an error if any image hash appears in more than one split.
+
+If the audit fails, regenerate the dataset after removing duplicate images from the raw input folder.
