@@ -1,0 +1,418 @@
+{
+  "split": "test",
+  "num_images": 80,
+  "dice": {
+    "mean": 0.773781526052434,
+    "std": 0.23591984919966066,
+    "min": 0.0,
+    "max": 1.0
+  },
+  "iou": {
+    "mean": 0.6792150868792717,
+    "std": 0.259417546627138,
+    "min": 0.0,
+    "max": 1.0
+  },
+  "per_image": [
+    {
+      "image_name": "crack-o-100.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-125.jpg",
+      "dice": 0.8090909090909091,
+      "iou": 0.6793893129770993
+    },
+    {
+      "image_name": "crack-o-126.jpg",
+      "dice": 0.8104575163398693,
+      "iou": 0.6813186813186813
+    },
+    {
+      "image_name": "crack-o-143.jpg",
+      "dice": 0.8317631224764468,
+      "iou": 0.7119815668202765
+    },
+    {
+      "image_name": "crack-o-148.jpg",
+      "dice": 0.7548309178743962,
+      "iou": 0.6062075654704171
+    },
+    {
+      "image_name": "crack-o-156.jpg",
+      "dice": 0.647337901950448,
+      "iou": 0.47856586126266565
+    },
+    {
+      "image_name": "crack-o-158.jpg",
+      "dice": 0.7495652173913043,
+      "iou": 0.5994436717663422
+    },
+    {
+      "image_name": "crack-o-159.jpg",
+      "dice": 0.8271186440677966,
+      "iou": 0.7052023121387283
+    },
+    {
+      "image_name": "crack-o-164.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-168.jpg",
+      "dice": 0.6458628841607565,
+      "iou": 0.47695530726256985
+    },
+    {
+      "image_name": "crack-o-17.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-172.jpg",
+      "dice": 0.8523052878353738,
+      "iou": 0.7426236949614162
+    },
+    {
+      "image_name": "crack-o-175.jpg",
+      "dice": 0.7535131029244209,
+      "iou": 0.6045094454600853
+    },
+    {
+      "image_name": "crack-o-177.jpg",
+      "dice": 0.7462954647507858,
+      "iou": 0.5952722063037249
+    },
+    {
+      "image_name": "crack-o-190.jpg",
+      "dice": 0.7790651218537755,
+      "iou": 0.6380890052356021
+    },
+    {
+      "image_name": "crack-o-198.jpg",
+      "dice": 0.6895833333333333,
+      "iou": 0.5262321144674086
+    },
+    {
+      "image_name": "crack-o-199.jpg",
+      "dice": 0.6507430997876857,
+      "iou": 0.4822974036191975
+    },
+    {
+      "image_name": "crack-o-222.jpg",
+      "dice": 0.7086705202312139,
+      "iou": 0.5487914055505819
+    },
+    {
+      "image_name": "crack-o-224.jpg",
+      "dice": 0.7837837837837838,
+      "iou": 0.6444444444444445
+    },
+    {
+      "image_name": "crack-o-239.jpg",
+      "dice": 0.6672905942910622,
+      "iou": 0.5007022471910112
+    },
+    {
+      "image_name": "crack-o-256.jpg",
+      "dice": 0.8396460176991151,
+      "iou": 0.7236119585112873
+    },
+    {
+      "image_name": "crack-o-279.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-283.jpg",
+      "dice": 0.7396672034353193,
+      "iou": 0.5868824531516184
+    },
+    {
+      "image_name": "crack-o-287.jpg",
+      "dice": 0.8986143187066975,
+      "iou": 0.8158943174669742
+    },
+    {
+      "image_name": "crack-o-293.jpg",
+      "dice": 0.6681318681318681,
+      "iou": 0.5016501650165016
+    },
+    {
+      "image_name": "crack-o-296.jpg",
+      "dice": 0.8410064239828694,
+      "iou": 0.725635103926097
+    },
+    {
+      "image_name": "crack-o-307.jpg",
+      "dice": 0.7681992337164751,
+      "iou": 0.6236391912908242
+    },
+    {
+      "image_name": "crack-o-310.jpg",
+      "dice": 0.6978807294233612,
+      "iou": 0.5359576078728236
+    },
+    {
+      "image_name": "crack-o-319.jpg",
+      "dice": 0.724648141465175,
+      "iou": 0.5681946802490097
+    },
+    {
+      "image_name": "crack-o-324.jpg",
+      "dice": 0.015151515151515152,
+      "iou": 0.007633587786259542
+    },
+    {
+      "image_name": "crack-o-333.jpg",
+      "dice": 0.6741045214327657,
+      "iou": 0.508414526129318
+    },
+    {
+      "image_name": "crack-o-339.jpg",
+      "dice": 0.7586206896551724,
+      "iou": 0.6111111111111112
+    },
+    {
+      "image_name": "crack-o-357.jpg",
+      "dice": 0.6740229885057472,
+      "iou": 0.5083217753120666
+    },
+    {
+      "image_name": "crack-o-366.jpg",
+      "dice": 0.04209260372820205,
+      "iou": 0.0214987714987715
+    },
+    {
+      "image_name": "crack-o-393.jpg",
+      "dice": 0.8063623789764869,
+      "iou": 0.6755504055619931
+    },
+    {
+      "image_name": "crack-o-410.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-420.jpg",
+      "dice": 0.7990822681088168,
+      "iou": 0.6653930131004366
+    },
+    {
+      "image_name": "crack-o-423.jpg",
+      "dice": 0.674074074074074,
+      "iou": 0.5083798882681564
+    },
+    {
+      "image_name": "crack-o-428.jpg",
+      "dice": 0.42868157286044717,
+      "iou": 0.2728164867517174
+    },
+    {
+      "image_name": "crack-o-43.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-430.jpg",
+      "dice": 0.6698702546852475,
+      "iou": 0.5036127167630058
+    },
+    {
+      "image_name": "crack-o-455.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-468.jpg",
+      "dice": 0.6905352711804325,
+      "iou": 0.5273416350839198
+    },
+    {
+      "image_name": "crack-o-48.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-489.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-500.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-51.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-532.jpg",
+      "dice": 0.7924273157538878,
+      "iou": 0.6562150055991042
+    },
+    {
+      "image_name": "crack-o-534.jpg",
+      "dice": 0.8406417112299466,
+      "iou": 0.7250922509225092
+    },
+    {
+      "image_name": "crack-o-555.jpg",
+      "dice": 0.821319018404908,
+      "iou": 0.6968119713728042
+    },
+    {
+      "image_name": "crack-o-560.jpg",
+      "dice": 0.8364501870112206,
+      "iou": 0.7188778492109877
+    },
+    {
+      "image_name": "crack-o-563.jpg",
+      "dice": 0.8903623016812693,
+      "iou": 0.802390098164746
+    },
+    {
+      "image_name": "crack-o-572.jpg",
+      "dice": 0.8,
+      "iou": 0.6666666666666666
+    },
+    {
+      "image_name": "crack-o-573.jpg",
+      "dice": 0.7868467410452143,
+      "iou": 0.648596321393998
+    },
+    {
+      "image_name": "crack-o-579.jpg",
+      "dice": 0.8683308859520313,
+      "iou": 0.7673010380622838
+    },
+    {
+      "image_name": "crack-o-612.jpg",
+      "dice": 0.8235653235653235,
+      "iou": 0.7000518941359626
+    },
+    {
+      "image_name": "crack-o-62.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-631.jpg",
+      "dice": 0.7862778730703259,
+      "iou": 0.647823629169022
+    },
+    {
+      "image_name": "crack-o-634.jpg",
+      "dice": 0.7517811342262752,
+      "iou": 0.602283105022831
+    },
+    {
+      "image_name": "crack-o-635.jpg",
+      "dice": 0.5974710221285564,
+      "iou": 0.4259954921111946
+    },
+    {
+      "image_name": "crack-o-647.jpg",
+      "dice": 0.8040336134453782,
+      "iou": 0.6722878021360315
+    },
+    {
+      "image_name": "crack-o-649.jpg",
+      "dice": 0.6145063801208865,
+      "iou": 0.4435288414929714
+    },
+    {
+      "image_name": "crack-o-66.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-665.jpg",
+      "dice": 0.7398047099368179,
+      "iou": 0.5870556061987238
+    },
+    {
+      "image_name": "crack-o-671.jpg",
+      "dice": 0.7020570670205707,
+      "iou": 0.5408997955010225
+    },
+    {
+      "image_name": "crack-o-673.jpg",
+      "dice": 0.668646080760095,
+      "iou": 0.5022301516503123
+    },
+    {
+      "image_name": "crack-o-677.jpg",
+      "dice": 0.8202357563850687,
+      "iou": 0.6952539550374688
+    },
+    {
+      "image_name": "crack-o-68.jpg",
+      "dice": 0.8400954653937948,
+      "iou": 0.7242798353909465
+    },
+    {
+      "image_name": "crack-o-722.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-726.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-734.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-747.jpg",
+      "dice": 0.0,
+      "iou": 0.0
+    },
+    {
+      "image_name": "crack-o-748.jpg",
+      "dice": 0.0,
+      "iou": 0.0
+    },
+    {
+      "image_name": "crack-o-749.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-771.jpg",
+      "dice": 0.0,
+      "iou": 0.0
+    },
+    {
+      "image_name": "crack-o-779.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-782.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-84.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-87.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    },
+    {
+      "image_name": "crack-o-88.jpg",
+      "dice": 1.0,
+      "iou": 1.0
+    }
+  ]
+}
