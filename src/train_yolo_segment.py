@@ -148,6 +148,36 @@ def parse_args():
         default=4,
         help="Mask downsample ratio (default: 4)",
     )
+    parser.add_argument(
+        "--mosaic",
+        type=float,
+        default=1.0,
+        help="Mosaic augmentation probability (default: 1.0)",
+    )
+    parser.add_argument(
+        "--scale",
+        type=float,
+        default=0.5,
+        help="Image scale augmentation range (default: 0.5)",
+    )
+    parser.add_argument(
+        "--translate",
+        type=float,
+        default=0.1,
+        help="Image translation augmentation (default: 0.1)",
+    )
+    parser.add_argument(
+        "--hsv_s",
+        type=float,
+        default=0.7,
+        help="HSV saturation augmentation (default: 0.7)",
+    )
+    parser.add_argument(
+        "--multi_scale",
+        type=float,
+        default=0.0,
+        help="Multi-scale training variance (default: 0.0)",
+    )
     return parser.parse_args()
 
 
@@ -208,6 +238,11 @@ def main():
         "close_mosaic": args.close_mosaic,
         "overlap_mask": args.overlap_mask,
         "mask_ratio": args.mask_ratio,
+        "mosaic": args.mosaic,
+        "scale": args.scale,
+        "translate": args.translate,
+        "hsv_s": args.hsv_s,
+        "multi_scale": args.multi_scale,
         "save": True,
         "save_period": -1,  # Save only best and last
         "plots": True,

@@ -4,11 +4,11 @@
   "kernel_dir": "/Users/anton/Documents/GitHub/Final_Year_Project/kaggle_sources/cracktrack",
   "kernel_output_dir": "/Users/anton/Documents/GitHub/Final_Year_Project/kaggle_sources/cracktrack_output",
   "segment_data_yaml": "/Users/anton/Documents/GitHub/Final_Year_Project/local_repro/segment_yolo/crack-seg.yaml",
-  "best_model": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/cracktrack_improved_m_adamw_100/weights/best.pt",
-  "eval_metrics": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/cracktrack_improved_m_adamw_100/eval/metrics_test.json",
+  "best_model": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/cracktrack_improved_l_512_10ep/weights/best.pt",
+  "eval_metrics": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/segment/cracktrack_improved_l_512_10ep/eval/metrics_test.json",
   "summary": {
     "num_images": 80,
-    "dice_mean": 0.773781526052434,
-    "iou_mean": 0.6792150868792717
+    "dice_mean": 0.7293456130009928,
+    "iou_mean": 0.6499407896660573
   }
 }
