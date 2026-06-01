@@ -1,7 +1,3 @@
-"""
-Generate a professional flowchart diagram for the Hybrid Quantum CNN architecture.
-"""
-
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
@@ -142,7 +138,7 @@ for idx, (color, label, use_dark_text) in enumerate(legend_items):
 info_x = 0.3
 info_y = 0.5
 info_text = (
-    "Total Parameters: ~500K\n"
+    "Total Parameters: ~50K\n"
     "Quantum Qubits: 4\n"
     "Trainable via Backpropagation"
 )
