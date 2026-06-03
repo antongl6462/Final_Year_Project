@@ -66,7 +66,7 @@ Concrete crack images for classification from the `raw_classification` directory
 | Image Size | 32×32 px | Input dimensions |
 | Batch Size | 32 | Samples per training batch |
 | Epochs | 8 | Maximum training iterations |
-| Learning Rate | 1e-3 | Initial learning rate (AdamW) |
+| Learning Rate | 1e-3 | Initial learning rate (SGD) |
 | Weight Decay | 1e-4 | L2 regularization strength |
 | Random Seed | 42 | For reproducibility |
 
@@ -79,7 +79,7 @@ Concrete crack images for classification from the `raw_classification` directory
 | Classical Hidden Dim | 64 | Classical feature dimension |
 
 ### Optimizer
-- **Type**: AdamW (Adam with decoupled weight decay)
+- **Type**: SGD (Stochastic Gradient Descent)
 - **Learning Rate Schedule**: Static (no learning rate decay)
 - **Early Stopping**: Best validation accuracy saved
 

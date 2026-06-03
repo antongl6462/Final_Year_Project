@@ -344,7 +344,7 @@ python src/train_yolo_classify.py \
   --patience 30 \
   --weight_decay 0.001 \
   --dropout 0.2 \
-  --optimizer AdamW \
+  --optimizer SGD \
   --lr0 0.001 \
   --lrf 0.001 \
   --cos_lr
