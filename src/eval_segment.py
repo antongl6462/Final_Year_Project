@@ -20,6 +20,7 @@ from typing import Dict, List, Tuple
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 from tqdm import tqdm
 from ultralytics import YOLO
 
@@ -175,6 +176,52 @@ def compute_dice_iou(pred_mask: np.ndarray, gt_mask: np.ndarray) -> Tuple[float,
     return float(dice), float(iou)
 
 
+def compute_pixel_confusion(pred_mask: np.ndarray, gt_mask: np.ndarray) -> np.ndarray:
+    """Return 2x2 pixel-level confusion matrix [[TN, FP], [FN, TP]] for Background/Crack."""
+    pred_binary = (pred_mask > 127).astype(bool)
+    gt_binary = (gt_mask > 127).astype(bool)
+    tp = int(np.logical_and(pred_binary, gt_binary).sum())
+    fp = int(np.logical_and(pred_binary, ~gt_binary).sum())
+    fn = int(np.logical_and(~pred_binary, gt_binary).sum())
+    tn = int(np.logical_and(~pred_binary, ~gt_binary).sum())
+    return np.array([[tn, fp], [fn, tp]], dtype=np.int64)
+
+
+def plot_pixel_confusion_matrix(cm: np.ndarray, output_path: Path):
+    """Plot and save pixel-level binary confusion matrix including background."""
+    class_names = ['Background', 'Crack']
+    cm_norm = cm.astype(float) / cm.sum(axis=1, keepdims=True).clip(min=1)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    for ax, data, fmt, title in zip(
+        axes,
+        [cm, cm_norm],
+        ['d', '.2%'],
+        ['Pixel Confusion Matrix (Counts)', 'Pixel Confusion Matrix (Normalised)'],
+    ):
+        sns.heatmap(
+            data,
+            annot=True,
+            fmt=fmt,
+            cmap='Blues',
+            xticklabels=class_names,
+            yticklabels=class_names,
+            ax=ax,
+            linewidths=0.5,
+            linecolor='#DDDDDD',
+            cbar_kws={'label': 'Pixel proportion' if fmt == '.2%' else 'Pixel count'},
+        )
+        ax.set_title(title, fontsize=13, pad=12)
+        ax.set_xlabel('Predicted', fontsize=11)
+        ax.set_ylabel('True', fontsize=11)
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f'✓ Pixel confusion matrix saved to: {output_path}')
+
+
 def create_overlay_image(image: np.ndarray, pred_mask: np.ndarray, gt_mask: np.ndarray) -> np.ndarray:
     """Create visualization overlay: GT in green, pred in red, overlap in yellow."""
     # Ensure image is RGB
@@ -273,6 +320,7 @@ def evaluate_split(
             "pred_mask": pred_mask,
             "gt_mask": gt_mask,
             "image": image,
+            "pixel_cm": compute_pixel_confusion(pred_mask, gt_mask),
         })
     
     return results_list, dice_scores, iou_scores
@@ -450,7 +498,20 @@ def main():
     with open(metrics_file, "w") as f:
         json.dump(metrics, f, indent=2)
     print(f"✓ Metrics saved to: {metrics_file}")
-    
+
+    # Pixel-level confusion matrix (includes background/background)
+    total_cm = np.zeros((2, 2), dtype=np.int64)
+    for r in results_list:
+        total_cm += r["pixel_cm"]
+    cm_file = output_dir / f"pixel_confusion_matrix_{args.split}.png"
+    plot_pixel_confusion_matrix(total_cm, cm_file)
+
+    tn, fp, fn, tp = total_cm[0, 0], total_cm[0, 1], total_cm[1, 0], total_cm[1, 1]
+    print(f"  TN (background→background): {tn:,}")
+    print(f"  FP (background→crack):      {fp:,}")
+    print(f"  FN (crack→background):      {fn:,}")
+    print(f"  TP (crack→crack):           {tp:,}")
+
     # Save visualizations
     if args.save_worst > 0:
         print(f"\nSaving {args.save_worst} worst cases...")

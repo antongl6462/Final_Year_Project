@@ -1,0 +1,117 @@
+{
+  "model": "ClassicalCNNBaseline",
+  "subset_size": 10000,
+  "epochs": 8,
+  "device": "cpu",
+  "train_time_seconds": 111.75,
+  "test_accuracy": 0.971333,
+  "precision": 0.958108,
+  "recall": 0.983356,
+  "f1": 0.970568,
+  "roc_auc": 0.997028,
+  "total_params": 45022,
+  "confusion_matrix": [
+    [
+      709,
+      12
+    ],
+    [
+      31,
+      748
+    ]
+  ],
+  "classification_report": {
+    "cracked": {
+      "precision": 0.9581081081081081,
+      "recall": 0.9833564493758669,
+      "f1-score": 0.9705681040383299,
+      "support": 721.0
+    },
+    "not_cracked": {
+      "precision": 0.9842105263157894,
+      "recall": 0.9602053915275995,
+      "f1-score": 0.9720597790773229,
+      "support": 779.0
+    },
+    "accuracy": 0.9713333333333334,
+    "macro avg": {
+      "precision": 0.9711593172119488,
+      "recall": 0.9717809204517331,
+      "f1-score": 0.9713139415578265,
+      "support": 1500.0
+    },
+    "weighted avg": {
+      "precision": 0.971663963963964,
+      "recall": 0.9713333333333334,
+      "f1-score": 0.9713427806085803,
+      "support": 1500.0
+    }
+  },
+  "history": {
+    "train_loss": [
+      0.33458870100336413,
+      0.11756081808464867,
+      0.09112477077117988,
+      0.08038789797680719,
+      0.08072014584285872,
+      0.07583531757124833,
+      0.06454595004660743,
+      0.06054479107260704
+    ],
+    "val_loss": [
+      0.0910221374531587,
+      0.07582236111164092,
+      0.09093754387522737,
+      0.06977559808890024,
+      0.0785982199559609,
+      0.049118018222351865,
+      0.04408120174209277,
+      0.049311603667835394
+    ],
+    "train_acc": [
+      0.8315714285714285,
+      0.9625714285714285,
+      0.9702857142857143,
+      0.975,
+      0.9752857142857143,
+      0.9755714285714285,
+      0.98,
+      0.9815714285714285
+    ],
+    "val_acc": [
+      0.972,
+      0.974,
+      0.97,
+      0.9766666666666667,
+      0.9726666666666667,
+      0.9826666666666667,
+      0.9853333333333333,
+      0.984
+    ]
+  },
+  "config": {
+    "dataset_root": "/Users/anton/Documents/GitHub/Final_Year_Project/raw_classification",
+    "image_size": 32,
+    "batch_size": 32,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "seed": 42,
+    "max_train_samples": 7000,
+    "max_val_samples": 1500,
+    "max_test_samples": 1500,
+    "quantum_preprocess": true,
+    "use_grayscale": true,
+    "use_clahe": true,
+    "use_blackhat": false,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "epochs": 8,
+    "n_qubits": 4,
+    "n_q_layers": 2,
+    "quantum_embedding_dim": 8,
+    "hidden_dim": 64,
+    "output_root": "/Users/anton/Documents/GitHub/Final_Year_Project/runs/quantum_cnn",
+    "experiment_name": "notebook_run"
+  }
+}

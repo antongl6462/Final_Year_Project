@@ -28,6 +28,7 @@ Final_Year_Project/
 ├── requirements.txt                 # Python dependencies
 ├── DATA_SETUP_GUIDE.md             # Detailed data setup instructions
 ├── YOLO_Concrete_Crack_Detection.ipynb  # Interactive notebook
+├── Kaggle_Cracktrack_Reproduction.ipynb  # End-to-end Kaggle reproduction notebook
 ├── README.md                        # This file
 └── runs/                           # Training outputs (auto-created)
 ```
@@ -58,6 +59,12 @@ pip install -r requirements.txt
 - `seaborn>=0.12.0`
 - `torch>=2.0.0`
 - `torchvision>=0.15.0`
+
+### Reproducibility Notebook
+
+For a single end-to-end workflow (Kaggle download → data prep → training → evaluation), use:
+
+- `Kaggle_Cracktrack_Reproduction.ipynb`
 
 ---
 
@@ -139,7 +146,7 @@ concrete-crack-images-for-classification/
   Negative/   # Will be treated as 'not_cracked'
 ```
 
-#### Segmentation Data (Optional)
+#### Segmentation Data 
 
 ```
 DATA_ROOT/raw_segmentation/
@@ -337,7 +344,7 @@ python src/train_yolo_classify.py \
   --patience 30 \
   --weight_decay 0.001 \
   --dropout 0.2 \
-  --optimizer AdamW \
+  --optimizer SGD \
   --lr0 0.001 \
   --lrf 0.001 \
   --cos_lr

@@ -1,0 +1,36 @@
+{
+  "class_names": [
+    "crack"
+  ],
+  "splits": {
+    "train": {
+      "total": 640,
+      "with_annotations": 403,
+      "total_polygons": 642,
+      "skipped": 0
+    },
+    "val": {
+      "total": 80,
+      "with_annotations": 46,
+      "total_polygons": 69,
+      "skipped": 0
+    },
+    "test": {
+      "total": 80,
+      "with_annotations": 55,
+      "total_polygons": 81,
+      "skipped": 0
+    }
+  },
+  "config": {
+    "data_root": "local_repro",
+    "output_dir": "local_repro/segment_yolo",
+    "train_ratio": 0.8,
+    "val_ratio": 0.1,
+    "test_ratio": 0.1,
+    "seed": 42,
+    "symlink": false,
+    "simplify_epsilon": 0.001,
+    "min_contour_area": 50
+  }
+}

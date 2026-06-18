@@ -1,0 +1,7 @@
+path: /Users/anton/Documents/GitHub/Final_Year_Project/local_repro/segment_yolo
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: crack
+nc: 1
